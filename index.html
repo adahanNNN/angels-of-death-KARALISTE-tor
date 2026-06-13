@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AOD Hidden Service - Datacore</title>
+
+    <!-- Tor ve Terminal Estetiği İçin Dijital Mono Fontlar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        /* 1. DERİN SİYAH VE TERMİNAL YEŞİLİ RENK PALETİ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #030504;
+            background-image: radial-gradient(circle, #09140e 10%, #020503 80%);
+            font-family: 'Share Tech Mono', monospace;
+            color: #00ff66;
+            cursor: crosshair; /* Hacker tarzı hedef imleci */
+        }
+
+        a, button, .browser-nav-button, .topic-card {
+            cursor: crosshair;
+        }
+
+        /* 2. TOR AĞI (ONION) SAHTE TARAYICI ÇUBUĞU */
+        .tor-chrome {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #050a07;
+            border-bottom: 1px solid #005522;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 5px 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+        }
+
+        .tor-circuit {
+            font-size: 0.75em;
+            color: #5a7a68;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tor-circuit span {
+            margin-right: 5px;
+        }
+
+        .circuit-active {
+            color: #ffb000;
+        }
+
+        .url-bar {
+            display: flex;
+            align-items: center;
+            background: #020403;
+            border: 1px solid #004411;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            color: #00ff66;
+        }
+
+        .lock-icon {
+            color: #00ff66;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* 3. İÇERİK ALANI VE TERMİNAL ESTETİĞİ */
+        .page-content {
+            padding-top: 80px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .main-container {
+            width: 900px; 
+            max-width: 95%;
+            background-color: rgba(2, 4, 3, 0.9);
+            border: 1px solid #003311;
+            box-shadow: 0 0 30px rgba(0, 255, 102, 0.05);
+            min-height: 85vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Başlık ve Sistem Duyurusu */
+        header.aod-header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #005522;
+            padding-bottom: 15px;
+        }
+
+        .aod-logo-patch {
+            width: 250px;
+            height: auto;
+            /* Logoyu terminal yeşiline çeviren filtre */
+            filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(300%) contrast(1.5);
+            opacity: 0.8;
+        }
+
+        .news-ticker {
+            background-color: #0a140f;
+            color: #ffb000; /* Kehribar uyarı rengi */
+            padding: 8px;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            border: 1px solid #ffb000;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Navigasyon (Klasör Dizinleri Gibi) */
+        nav {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 10px;
+            background: #020503;
+            border: 1px solid #002200;
+        }
+
+        nav a {
+            color: #5a7a68;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 5px 15px;
+            margin: 0 5px;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        nav a::before {
+            content: "[ ";
+            color: #002200;
+        }
+        nav a::after {
+            content: " ]";
+            color: #002200;
+        }
+
+        nav a:hover, nav a.active {
+            color: #00ff66;
+            background-color: rgba(0, 255, 102, 0.1);
+        }
+
+        nav a:hover::before, nav a:hover::after {
+            color: #00ff66;
+        }
+
+        /* İçerik Bölümleri ve Geçişler */
+        .content-section {
+            display: none; 
+        }
+
+        .content-section.active {
+            display: block; 
+            animation: terminalGlitch 0.3s ease-out forwards;
+        }
+
+        @keyframes terminalGlitch {
+            0% { opacity: 0; transform: scale(0.98); filter: blur(2px); }
+            50% { opacity: 0.5; filter: blur(0px); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        h2 {
+            color: #00ff66;
+            border-bottom: 1px solid #005522;
+            padding-bottom: 5px;
+            margin-top: 10px;
+            font-size: 1.4em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2::before {
+            content: "> ";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            color: #a3c2ae;
+        }
+
+        /* VERİ DOSYALARI (ESKİ KARTLAR) */
+        .archive-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .topic-card {
+            width: 31%;
+            margin-bottom: 20px;
+            background-color: #050a07;
+            border: 1px solid #003311;
+            padding: 10px;
+            text-align: left;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .topic-card::before {
+            content: "ENCRYPTED_FILE";
+            position: absolute;
+            top: -8px;
+            left: 10px;
+            background: #030504;
+            font-size: 0.6em;
+            padding: 0 5px;
+            color: #5a7a68;
+        }
+
+        .topic-card:hover {
+            border-color: #00ff66;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+            background-color: #08140c;
+        }
+
+        .topic-card img, .story-header-img {
+            width: 100%;
+            object-fit: cover;
+            border: 1px solid #002200;
+            margin-bottom: 10px;
+            /* Güvenlik kamerası/Termal efekt filtresi */
+            filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(300%) contrast(1.2) brightness(0.8);
+            transition: filter 0.3s;
+        }
+
+        .topic-card:hover img {
+            filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(400%) contrast(1.5) brightness(1);
+        }
+
+        .story-header-img {
+            max-height: 350px;
+            margin-bottom: 20px;
+        }
+
+        .topic-card h3 {
+            color: #00ff66;
+            font-size: 1em;
+            margin-bottom: 5px;
+            border-bottom: 1px dashed #003311;
+            padding-bottom: 5px;
+        }
+
+        .topic-card p {
+            font-size: 0.8em;
+            color: #5a7a68;
+            margin: 0;
+        }
+
+        /* Butonlar */
+        .back-btn {
+            background-color: transparent;
+            color: #00ff66;
+            font-size: 0.9em;
+            padding: 8px 15px;
+            border: 1px solid #00ff66;
+            text-transform: uppercase;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: #00ff66;
+            color: #000;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            text-align: center;
+            color: #334d3d;
+            font-size: 0.75em;
+            border-top: 1px dashed #003311;
+        }
+
+        /* ESKİ CRT MONİTÖR ÇİZGİLERİ VE TİTREME (SCANLINES) */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(0, 255, 102, 0.02), rgba(0, 0, 0, 0.01), rgba(0, 255, 102, 0.02));
+            background-size: 100% 4px, 4px 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Atmosferik CRT Efekti -->
+    <div class="scanlines"></div>
+
+    <!-- Sahte Tor Browser Başlığı -->
+    <div class="tor-chrome">
+        <div class="tor-circuit">
+            <span>[Tor Route]:</span>
+            <span>Client</span> ➔ 
+            <span>Node_FR(192.168.x.x)</span> ➔ 
+            <span>Node_RU(Relay)</span> ➔ 
+            <span class="circuit-active">AOD_CORE_NODE</span>
+        </div>
+        <div class="url-bar">
+            <span class="lock-icon">🔒</span>
+            <span>aodmc49hiddenv3webportal777.onion</span>
+            <span id="sub-page-url" style="color: #5a7a68; margin-left: 2px;">/root/index</span>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="main-container">
+
+            <header class="aod-header">
+                <!-- Logoyu ekleyin, CSS filtresi onu yeşil yapacaktır -->
+                <img src="aod_patch_logo.png" alt="AOD Core Data" class="aod-logo-patch" onerror="this.style.display='none';">
+            </header>
+
+            <div class="news-ticker">
+                <marquee scrollamount="6">SYS_WARN: LSPD/FIB IP ADRESLERİ ENGELLENDİ. KULLANICI TRAFİĞİ AES-256 İLE ŞİFRELENİYOR. YETKİSİZ ERİŞİM SAĞLAYAN SİVİLLERİN KİMLİKLERİ DEŞİFRE EDİLECEKTİR.</marquee>
+            </div>
+
+            <nav>
+                <a href="#home" onclick="showSection('home')">./kara_arsiv</a>
+                <a href="#tuco" onclick="showSection('tuco')">./logs/kızıl.inf</a>
+                <a href="#eddie" onclick="showSection('eddie')">./logs/eddiepici.inf</a>
+                <a href="#caylak" onclick="showSection('caylak')">./logs/beyniyerinesikinikullanan.inf</a>
+            </nav>
+
+            <div id="home" class="content-section active">
+                <h2>ROOT_ACCESS // AOD ARCHIVES</h2>
+                <p>Burası Angels of Death Motorcycle Club'ın emir komuta zinciri dışında dönen, kanla yazılmış kayıtlarının saklandığı izole veri tabanıdır. Kulübün namına leke sürenler, kuralları çiğneyenler ve ANGELS'A saygısızlık eden farelerin şifreli dosyaları aşağıda listelenmiştir.</p>
+                <p style="color: #ffb000; font-size: 0.85em;">>> LÜTFEN İNCELEMEK İSTEDİĞİNİZ VERİ BLOĞUNU SEÇİN:</p>
+                
+                <div class="archive-grid">
+                    
+                    <div class="topic-card" onclick="showSection('tuco')">
+                        <img src="https://i.hizliresim.com/5o9mvmu.png" alt="DATA_CORRUPTED">
+                        <h3>FILE_01: KIZIL GÜZEL</h3>
+                        <p>El Burro sınırları içerisinde tespit edilen rakip kulüp mensup yamalı şahıs hakkında gerekli işlem uygulanmıştır. Şahsın bölgede bulunması ve kulübümüze karşı sergilediği tutum göz önünde bulundurularak müdahalede bulunulmuştur. Olay sonucunda hedef etkisiz hale getirilmiş olup, bölgeden güvenli şekilde ayrılınmıştır. Olaya ilişkin görüntüler ve rapor ekte sunulmuştur.</p>
+                    </div>
+
+                    <div class="topic-card" onclick="showSection('eddie')">
+                        <img src="https://i.hizliresim.com/6mvmwl6.png" alt="DATA_CORRUPTED">
+                        <h3>FILE_02: MİNİKFARE_ED</h3>
+                        <p>El Burro bölgesinde tespit edilen rakip kulüp yamalısı fare lakaplı şahsa yönelik müdahale gerçekleştirilmiştir. Şahsın kulübümüze karşı provokatif hareketlerde bulunması ve kulübümüze sergilediği tavır nedeniyle gerekli işlem uygulanmıştır.</p>
+                    </div>
+
+                    <div class="topic-card" onclick="showSection('caylak')">
+                        <img src="https://i.hizliresim.com/5pdhess.png" alt="DATA_CORRUPTED">
+                        <h3>FILE_03: beyiniyerinesikinikullanan</h3>
+                        <p>Rakip kulüple bağlantılı olduğu bilinen aday üye, kulübümüz tarafından yürütülen operasyon kapsamında takip altına alınmıştır. Şahıs, bir bar çıkışında temas kurularak belirlenen noktaya yönlendirilmiş ve burada kontrol altına alınmıştır. Şahsa, bölgede kimin söz sahibi olduğu ve kulübümüze karşı atılacak adımların sonuçları açık şekilde iletilmiştir. Gerekli mesaj verildikten sonra operasyon sonlandırılmıştır.</p>
+                    </div>
+
+                </div>
+
+                <p style="color: #ff3333; border-top: 1px dashed #ff3333; padding-top: 10px; font-size: 0.8em; text-align: center;">
+                    SEC_ALERT: Bu sunucudan veri indirmek veya dışa aktarmak Tüzük Madde 8 gereği ölümle cezalandırılır. Sunucu sadece AODMC için rezervedir.
+                </p>
+            </div>
+
+            <div id="tuco" class="content-section">
+                <h2>DECRYPTING FILE: Kızıl fıstığın, sonu...</h2>
+                <img src="https://i.hizliresim.com/5o9mvmu.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
+                <p>El Burro Heights sokaklarında yanlış kapıyı çalmanın bir bedeli vardır. Kulüp evimizin çevresinde dolaşan ve defalarca uyarılmasına rağmen sınırlarını aşmaya devam eden kızıl kafalı şahıs, sonunda aradığı belayı buldu.
+
+Kulüp bölgesine yönelik provokatif hareketleri ve kulüp evimize kadar uzanan girişimleri sonucunda kendisine gerekli karşılık verilmiştir. Yaşanan olay sırasında şahıs silahla yaralanmış ve olay yerinden hastanelik şekilde ayrılmak zorunda kalmıştır.
+
+O gece El Burro Heights'ta herkes bir kez daha hatırladı; bazı bölgeler sahipsiz değildir. Yanlış insanların kapısına dayanmanın, yanlış renklerle yanlış yerde görünmenin bir sonucu vardır.
+
+Kulüp ayakta, kapılar hâlâ açık. Ancak bundan sonra içeri bakmadan önce iki kez düşünecekler.
+
+Olay raporu ve ilgili kayıtlar ektedir: Ölüm.</p>
+                <p>El Burro Heights'ta gün sıradan başlamıştı, ta ki kızıl kafalı farenin Audi Q8'iyle kulüp bölgesine girmesine kadar. Motor seslerinin yerini kısa süre sonra Stamped Rifle'dan çıkan mermiler aldı. Bölgeye yönelik bu pervasız saldırı, kulüp üyelerinin anında karşılık vermesiyle bambaşka bir yöne evrildi.
+
+Kurşunlar havada uçuşurken saldırganın planları saniyeler içerisinde çöktü. Açılan karşı ateş sonucunda kızıl kafalı fare ağır şekilde yaralandı ve olay yerinden hastanelik olarak çıkarıldı. Bölgeye korku salmaya geldiğini sanan adam, günün sonunda kendi canının derdine düşmüştü.
+
+Silah sesleri kısa süre içinde kolluk kuvvetlerini bölgeye çekti. Polis ekipleri olay yerinde inceleme yaptı, ifadeler toplandı ve çevredeki deliller değerlendirildi. Ancak yeterli kanıt elde edilemediğinden dosya sonuçsuz kaldı. Olayla bağlantılı hiçbir tutuklama gerçekleşmedi ve soruşturma kapatıldı.
+
+El Burro Heights o gece bir şeyi daha hatırladı: Bazı bölgelerin sahibi vardır. Yanlış insanlara gözdağı vermeye çalışanlar, bazen hastane yatağında bunun bedelini düşünmek zorunda kalır..</p>
+                <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: INACTIVE // TARGET ELIMINATED ]</p>
+                <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
+            </div>
+
+            <div id="eddie" class="content-section">
+                <h2>DECRYPTING FILE: minikfare (DISCIPLINARY_ACTION)...</h2>
+                <img src="https://i.hizliresim.com/c95sbfl.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
+                <p>Minik fare, Vespucci sokaklarında tek başına ve savunmasız şekilde dolaşırken etrafındaki sessizliğin ne anlama geldiğini fark edemedi. Bir gün önce yaşananların hesabının kapanmadığını sanıyordu. Yanılmıştı.
+Gözler uzun süredir üzerindeydi. Doğru an beklendi ve Vespucci'nin kalabalığı arasında kendisine yönelik operasyon başlatıldı. Kaçabileceği bir yol bulamadan köşeye sıkışan fare, dün attığı adımların ve yaptığı hataların bedeliyle yüzleşmek zorunda kaldı.</p>
+                <p>O gece amaç yalnızca bir mesaj vermekti. Bazı hesaplar unutulmaz, bazı sayfalar da kendiliğinden kapanmaz. Minik fareye, bir gün önce yaşananların cevabı sahada verildi ve gerekli karşılık gösterildi.
+Vespucci'de işler kısa sürdü. Operasyon tamamlandıktan sonra bölge sessizliğine geri döndü. Ancak orada bulunan herkes aynı şeyi öğrendi: Dün açılan hesap, bugün kapatılmıştı..</p>
+                <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: ALIVE // DEMOTED & REPRIMANDED ]</p>
+                <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
+            </div>
+
+            <div id="caylak" class="content-section">
+                <h2>DECRYPTING FILE: beyniyerinesikinikullananfare...</h2>
+                <img src="https://i.hizliresim.com/5pdhess.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
+                <p>Bazen insanlar yanlış masaya oturur, yanlış insanlarla içki içer ve yanlış bölgelerde fazla rahat davranır. Rakip kulübün prospecti için de hikâye tam olarak böyle başladı.
+
+Dostlarımızın işlettiği barda günlerdir takıldığı fark edilen genç aday, dikkat çekmediğini sanıyordu. Ancak gözler çoktan üzerindeydi. Kulüp çevresinde "Mia" olarak bilinen kadın tarafından kurulan temas, onu farkında olmadan hazırlanan oyunun içine çekti.
+
+Gece ilerledikçe prospect, güvenli olduğunu düşündüğü kalabalıktan uzaklaştırıldı ve kulübün kontrolündeki bir noktaya götürüldü. Orada kendisine bölgede kimin söz sahibi olduğu, hangi renklerin nerede taşınacağı ve bazı kapıların neden çalınmaması gerektiği açık şekilde anlatıldı. p>
+                <p>Saatler sonra operasyon sona erdiğinde genç aday, yaşadıklarının ağırlığıyla deniz kenarında tek başına bırakıldı. Arkasında ne dostları vardı ne de ona yardım edecek birileri. Sadece aldığı mesaj ve bundan sonra atacağı her adımda hatırlayacağı uzun bir gece.
+
+Bazen bir kurşun değil, verilen mesaj kalıcı iz bırakır. O gece deniz kıyısında bırakılan şey yalnızca bir prospect değil, rakip kulübe gönderilmiş açık bir uyarıydı..</p>
+                <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: PASSED // PATCH GRANTED ]</p>
+                <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
+            </div>
+
+            <footer>
+                <p>SYS_KERNEL_V3.1 // CONNECTION: adahanN // AOD_MC_INTERNAL_USE_ONLY</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Dizin yapısını yansıtacak şekilde URL panelini güncelle
+            const subPageUrlText = document.getElementById('sub-page-url');
+            if (sectionId === 'home') {
+                subPageUrlText.textContent = '/root/index.dat';
+            } else {
+                subPageUrlText.textContent = '/root/logs/' + sectionId + '.inf';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('load', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const sectionId = hash.substring(1);
+                showSection(sectionId);
+            } else {
+                showSection('home');
+            }
+        });
+    </script>
+</body>
+</html>
