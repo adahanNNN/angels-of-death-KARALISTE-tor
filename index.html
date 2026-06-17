@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AOD Hidden Service - Datacore</title>
 
-    <!-- Tor ve Terminal Estetiği İçin Dijital Mono Fontlar -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -211,8 +210,9 @@
         /* VERİ DOSYALARI (ESKİ KARTLAR) */
         .archive-grid {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-wrap: wrap;
+            gap: 3.5%;
             margin: 30px 0;
         }
 
@@ -318,10 +318,8 @@
 </head>
 <body>
 
-    <!-- Atmosferik CRT Efekti -->
     <div class="scanlines"></div>
 
-    <!-- Sahte Tor Browser Başlığı -->
     <div class="tor-chrome">
         <div class="tor-circuit">
             <span>[Tor Route]:</span>
@@ -341,7 +339,6 @@
         <div class="main-container">
 
             <header class="aod-header">
-                <!-- Logoyu ekleyin, CSS filtresi onu yeşil yapacaktır -->
                 <img src="https://i.hizliresim.com/8awus7v.png" alt="AOD Core Data" class="aod-logo-patch" onerror="this.style.display='none';">
             </header>
 
@@ -354,6 +351,7 @@
                 <a href="#tuco" onclick="showSection('tuco')">./logs/kızıl.inf</a>
                 <a href="#eddie" onclick="showSection('eddie')">./logs/minikfare.inf</a>
                 <a href="#caylak" onclick="showSection('caylak')">./logs/beyniyerinesikinikullanan.inf</a>
+                <a href="#kurye" onclick="showSection('kurye')">./logs/karakurye.inf</a>
             </nav>
 
             <div id="home" class="content-section active">
@@ -381,6 +379,12 @@
                         <p>Rakip kulüple bağlantılı olduğu bilinen aday üye, kulübümüz tarafından yürütülen operasyon kapsamında takip altına alınmıştır. Şahıs, bir bar çıkışında temas kurularak belirlenen noktaya yönlendirilmiş ve burada kontrol altına alınmıştır. Şahsa, bölgede kimin söz sahibi olduğu ve kulübümüze karşı atılacak adımların sonuçları açık şekilde iletilmiştir. Gerekli mesaj verildikten sonra operasyon sonlandırılmıştır.</p>
                     </div>
 
+                    <div class="topic-card" onclick="showSection('kurye')">
+                        <img src="https://i.hizliresim.com/d17tcwb.png" alt="DATA_CORRUPTED">
+                        <h3>FILE_04: KIZIL_KAFA_PART2</h3>
+                        <p>Kızıl kafalı piç, geçmişte yaşananlardan ders çıkarmak yerine kulübümüze karşı aynı tavırlarını sürdürmeye devam etti. Uzun süredir takip altında tutulan şahıs, Mission Row bölgesinde tespit edilmiş ve uygun anın oluşmasıyla birlikte hakkında gerekli işlem uygulanmıştır. Operasyon sorunsuz şekilde tamamlanmış, ekip bölgeden güvenli olarak ayrılmıştır. Olaya ait rapor ve kayıtlar ekte sunulmuştur.</p>
+                    </div>
+
                 </div>
 
                 <p style="color: #ff3333; border-top: 1px dashed #ff3333; padding-top: 10px; font-size: 0.8em; text-align: center;">
@@ -392,21 +396,14 @@
                 <h2>DECRYPTING FILE: Kızıl fıstığın, sonu...</h2>
                 <img src="https://i.hizliresim.com/5o9mvmu.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
                 <p>El Burro Heights sokaklarında yanlış kapıyı çalmanın bir bedeli vardır. Kulüp evimizin çevresinde dolaşan ve defalarca uyarılmasına rağmen sınırlarını aşmaya devam eden kızıl kafalı şahıs, sonunda aradığı belayı buldu.
-
-Kulüp bölgesine yönelik provokatif hareketleri ve kulüp evimize kadar uzanan girişimleri sonucunda kendisine gerekli karşılık verilmiştir. Yaşanan olay sırasında şahıs silahla yaralanmış ve olay yerinden hastanelik şekilde ayrılmak zorunda kalmıştır.
-
-O gece El Burro Heights'ta herkes bir kez daha hatırladı; bazı bölgeler sahipsiz değildir. Yanlış insanların kapısına dayanmanın, yanlış renklerle yanlış yerde görünmenin bir sonucu vardır.
-
-Kulüp ayakta, kapılar hâlâ açık. Ancak bundan sonra içeri bakmadan önce iki kez düşünecekler.
-
-Olay raporu ve ilgili kayıtlar ektedir: </p>
+                Kulüp bölgesine yönelik provokatif hareketleri ve kulüp evimize kadar uzanan girişimleri sonucunda kendisine gerekli karşılık verilmiştir. Yaşanan olay sırasında şahıs silahla yaralanmış ve olay yerinden hastanelik şekilde ayrılmak zorunda kalmıştır.
+                Ogece El Burro Heights'ta herkes bir kez daha hatırladı; bazı bölgeler sahipsiz değildir. Yanlış insanların kapısına dayanmanın, yanlış renklerle yanlış yerde görünmenin bir sonucu vardır.
+                Kulüp ayakta, kapılar hâlâ açık. Ancak bundan sonra içeri bakmadan önce iki kez düşünecekler.
+                Olay raporu ve ilgili kayıtlar ektedir: </p>
                 <p>El Burro Heights'ta gün sıradan başlamıştı, ta ki kızıl kafalı farenin Audi Q8'iyle kulüp bölgesine girmesine kadar. Motor seslerinin yerini kısa süre sonra Stamped Rifle'dan çıkan mermiler aldı. Bölgeye yönelik bu pervasız saldırı, kulüp üyelerinin anında karşılık vermesiyle bambaşka bir yöne evrildi.
-
-Kurşunlar havada uçuşurken saldırganın planları saniyeler içerisinde çöktü. Açılan karşı ateş sonucunda kızıl kafalı fare ağır şekilde yaralandı ve olay yerinden hastanelik olarak çıkarıldı. Bölgeye korku salmaya geldiğini sanan adam, günün sonunda kendi canının derdine düşmüştü.
-
-Silah sesleri kısa süre içinde kolluk kuvvetlerini bölgeye çekti. Polis ekipleri olay yerinde inceleme yaptı, ifadeler toplandı ve çevredeki deliller değerlendirildi. Ancak yeterli kanıt elde edilemediğinden dosya sonuçsuz kaldı. Olayla bağlantılı hiçbir tutuklama gerçekleşmedi ve soruşturma kapatıldı.
-
-El Burro Heights o gece bir şeyi daha hatırladı: Bazı bölgelerin sahibi vardır. Yanlış insanlara gözdağı vermeye çalışanlar, bazen hastane yatağında bunun bedelini düşünmek zorunda kalır..</p>
+                Kurşunlar havada uçuşurken saldırganın planları saniyeler içerisinde çöktü. Açılan karşı ateş sonucunda kızıl kafalı fare ağır şekilde yaralandı ve olay yerinden hastanelik olarak çıkarıldı. Bölgeye korku salmaya geldiğini sanan adam, günün sonunda kendi canının derdine düşmüştü.
+                Silah sesleri kısa süre içinde kolluk kuvvetlerini bölgeye çekti. Polis ekipleri olay yerinde inceleme yaptı, ifadeler toplandı ve çevredeki deliller değerlendirildi. Ancak yeterli kanıt elde edilemediğinden dosya sonuçsuz kaldı. Olayla bağlantılı hiçbir tutuklama gerçekleşmedi ve soruşturma kapatıldı.
+                El Burro Heights o gece bir şeyi daha hatırladı: Bazı bölgelerin sahibi vardır. Yanlış insanlara gözdağı vermeye çalışanlar, bazen hastane yatağında bunun bedelini düşünmek zorunda kalır..</p>
                 <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: INACTIVE // TARGET ELIMINATED ]</p>
                 <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
             </div>
@@ -415,9 +412,9 @@ El Burro Heights o gece bir şeyi daha hatırladı: Bazı bölgelerin sahibi var
                 <h2>DECRYPTING FILE: minikfare (DISCIPLINARY_ACTION)...</h2>
                 <img src="https://i.hizliresim.com/2jaaf0a.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
                 <p>Minik fare, Vespucci sokaklarında tek başına ve savunmasız şekilde dolaşırken etrafındaki sessizliğin ne anlama geldiğini fark edemedi. Bir gün önce yaşananların hesabının kapanmadığını sanıyordu. Yanılmıştı.
-Gözler uzun süredir üzerindeydi. Doğru an beklendi ve Vespucci'nin kalabalığı arasında kendisine yönelik operasyon başlatıldı. Kaçabileceği bir yol bulamadan köşeye sıkışan fare, dün attığı adımların ve yaptığı hataların bedeliyle yüzleşmek zorunda kaldı.</p>
+                Gözler uzun süredir üzerindeydi. Doğru an beklendi ve Vespucci'nin kalabalığı arasında kendisine yönelik operasyon başlatıldı. Kaçabileceği bir yol bulamadan köşeye sıkışan fare, dün attığı adımların ve yaptığı hataların bedeliyle yüzleşmek zorunda kaldı.</p>
                 <p>O gece amaç yalnızca bir mesaj vermekti. Bazı hesaplar unutulmaz, bazı sayfalar da kendiliğinden kapanmaz. Minik fareye, bir gün önce yaşananların cevabı sahada verildi ve gerekli karşılık gösterildi.
-Vespucci'de işler kısa sürdü. Operasyon tamamlandıktan sonra bölge sessizliğine geri döndü. Ancak orada bulunan herkes aynı şeyi öğrendi: Dün açılan hesap, bugün kapatılmıştı..</p>
+                Vespucci'den işler kısa sürdü. Operasyon tamamlandıktan sonra bölge sessizliğine geri döndü. Ancak orada bulunan herkes aynı şeyi öğrendi: Dün açılan hesap, bugün kapatılmıştı..</p>
                 <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: ALIVE // DEMOTED & REPRIMANDED ]</p>
                 <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
             </div>
@@ -426,14 +423,36 @@ Vespucci'de işler kısa sürdü. Operasyon tamamlandıktan sonra bölge sessizl
                 <h2>DECRYPTING FILE: beyniyerinesikinikullananfare...</h2>
                 <img src="https://i.hizliresim.com/5pdhess.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
                 <p>Bazen insanlar yanlış masaya oturur, yanlış insanlarla içki içer ve yanlış bölgelerde fazla rahat davranır. Rakip kulübün prospecti için de hikâye tam olarak böyle başladı.
-
-Dostlarımızın işlettiği barda günlerdir takıldığı fark edilen genç aday, dikkat çekmediğini sanıyordu. Ancak gözler çoktan üzerindeydi. Kulüp çevresinde "Mia" olarak bilinen kadın tarafından kurulan temas, onu farkında olmadan hazırlanan oyunun içine çekti.
-
-Gece ilerledikçe prospect, güvenli olduğunu düşündüğü kalabalıktan uzaklaştırıldı ve kulübün kontrolündeki bir noktaya götürüldü. Orada kendisine bölgede kimin söz sahibi olduğu, hangi renklerin nerede taşınacağı ve bazı kapıların neden çalınmaması gerektiği açık şekilde anlatıldı. p>
+                Dostlarımızın işlettiği barda günlerdir takıldığı fark edilen genç aday, dikkat çekmediğini sanıyordu. Ancak gözler çoktan üzerindeydi. Kulüp çevresinde "Mia" olarak bilinen kadın tarafından kurulan temas, onu farkında olmadan hazırlanan oyunun içine çekti.
+                Gece ilerledikçe prospect, güvenli olduğunu düşündüğü kalabalıktan uzaklaştırıldı ve kulübün kontrolündeki bir noktaya götürüldü. Orada kendisine bölgede kimin söz sahibi olduğu, hangi renklerin nerede taşınacağı ve bazı kapıların neden çalınmaması gerektiği açık şekilde anlatıldı.</p>
                 <p>Saatler sonra operasyon sona erdiğinde genç aday, yaşadıklarının ağırlığıyla deniz kenarında tek başına bırakıldı. Arkasında ne dostları vardı ne de ona yardım edecek birileri. Sadece aldığı mesaj ve bundan sonra atacağı her adımda hatırlayacağı uzun bir gece.
-
-Bazen bir kurşun değil, verilen mesaj kalıcı iz bırakır. O gece deniz kıyısında bırakılan şey yalnızca bir prospect değil, rakip kulübe gönderilmiş açık bir uyarıydı..</p>
+                Bazen bir kurşun değil, verilen mesaj kalıcı iz bırakır. O gece deniz kıyısında bırakılan şey yalnızca bir prospect değil, rakip kulübe gönderilmiş açık bir uyarıydı..</p>
                 <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: PASSED // PATCH GRANTED ]</p>
+                <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
+            </div>
+
+            <div id="kurye" class="content-section">
+                <h2>DECRYPTING FILE: kızıl_kafali_fare_part2...</h2>
+                <img src="https://i.hizliresim.com/d17tcwb.png" alt="Surveillance_Footage" class="story-header-img" onerror="this.style.display='none';">
+                <p>Bazı insanlar yaşadıkları ilk olaydan ders çıkarır. Bazıları ikinci kez aynı hatayı yapmaz. Kızıl kafalı piç ise aldığı her darbeyi şansına bağlayıp hâlâ dokunulmaz olduğunu sananlardandı belli ki.
+
+Uzun süredir gözümüzün önündeydi. Nerede dolaştığı, kimlerle vakit geçirdiği ve hangi köşelerde rahat rahat nefes aldığı biliniyordu. Günler süren takibin ardından Mission Row Polis Departmanı yakınındaki kıyafet mağazasında tespit edildi. Yanında yine Rus karısı vardı. İkisi de o günün diğer günlerden farklı olacağını anlayamayacak kadar rahattı.
+
+Mağazanın içinde vakit geçirirken dışarıda bekleyenler çoktan kararını vermişti. Dakikalar sonra kapı açıldı ve kızıl kafalı piç dışarı adımını attı. Belki yine kurtulacağını düşündü. Belki daha önce olduğu gibi şansının yanında olduğunu sandı. Ama bazı insanlar aynı hatayı fazla tekrarlar.
+
+Kulübün operasyon ekibi harekete geçtiğinde Mission Row sokaklarında hesap kapatılıyordu. Günler boyunca biriken saygısızlığın ve boş özgüvenin karşılığı birkaç saniye içerisinde verildi. O ana kadar kendini bir sik sanan adam, orospu karısının yanında yere serildi. Aynı otobanda olduğu gibi :)
+
+Ekip planlandığı gibi bölgeden ayrılırken geride unutulmayacak bir manzara kaldı. Yerde yatan kızıl kafalı piç ve başında perişan halde ağlayan Rus karısı. Kadının çığlıkları sokakta yankılanırken, yaşananların nedenini açıklayabilecek tek kişi yine yerde yatıyordu. 
+
+Asıl komik olan ise şu; bu onun ilk seferi değildi. Daha önce de aynı sonla karşılaşmış, yine de akıllanmamıştı. Dokuz canlı orospu çocuğu ölmek bilmiyor ama Angels'da taviz vermiyor. .</p>
+                <p>O gece Mission Row'da verilen mesaj oldukça basitti. Angels Of Death unutmaz, bekler ve zamanı, geldiğinde hesabı kapatır. Bazıları yaşadıklarını tesadüf sanır, bazıları ise kendini gerçekten önemli zanneder. Ama günün sonunda herkes aynı gerçeği öğrenir; Angels affetmez, Angels unutmaz, ANGELS diğerlerine benzemez baş edemezsiniz.
+
+Bazıları yeleğine bakıp kendini haydut sanır. Ancak haydutluk iddia etmekle olmaz. Bir adam her karşılaşmada kaçıyorsa, geriye sadece farelik kalır.
+
+Mission Row'da yaşananlar yalnızca kızıl kafalı piçin hesabı değildi. Bu, kendine haydut diyen tüm farelere gönderilmiş bir mesajdı. Şehir büyük olabilir, fakat bazı hesaplar unutulmaz. Aynı renkleri taşıyanlar bundan sonra attıkları her adımı iki kez düşünmek zorunda kalacaktır.
+
+Sikilmiş Rus karısı da diğerlerinin karısı gibi mezarı boylayabilir. Bir daha ki sefere eli silahlı insanlara karşı nasıl hareket edeceğini iyi bilsin... :).</p>
+                <p style="color: #5a7a68; font-size: 0.8em; margin-top: 20px;">[ STATUS: BLACKLISTED // DISPOSED OF ]</p>
                 <a href="#home" class="back-btn" onclick="showSection('home')">./EXIT & RETURN_TO_ROOT</a>
             </div>
 
